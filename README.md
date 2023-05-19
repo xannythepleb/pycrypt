@@ -1,4 +1,4 @@
-# pycrypt
+# PyCrypt
 
 A rudimentary encryption program written in Python. Plan to add a lot more functionality soon.
 
