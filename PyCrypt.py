@@ -1,8 +1,8 @@
 import os
 from hashlib import sha256
+from getpass import getpass
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 
 # Function to generate a salt for the password
@@ -39,6 +39,7 @@ def encrypt(file_path, password):
 
     # Save SHA256 hash of files to var
     file_data_hash = sha256(file_data).hexdigest()
+    file_data_hash_bytes = file_data_hash.encode()
 
     # Print SHA256 from var
     print("Unencrypted file SHA256 (decrypted file should match):")
@@ -55,7 +56,6 @@ def encrypt(file_path, password):
         output_file.write(salt)
         output_file.write(nonce)
         output_file.write(encrypted_data)
-        output_file.write(file_data_hash)
 
     # Print success
     print("File encrypted successfully.")
@@ -106,12 +106,13 @@ def decrypt(file_path, password):
 
 def main():
     # Welcome message
-    print("Welcome to PyCrypt v0.0.1. This is only a hobby project. It has not been audited. Don't trust it with important shit.")
+    print("Welcome to PyCrypt v0.0.2. This is only a hobby project. It has not been audited. Don't trust it with important shit.")
     # Prompt for encrypt or decrypt
     action = input("Do you want to encrypt or decrypt a file? (e/d): ")
 
     # Prompt for the password
-    password = input("Enter the password: ").encode()
+ #   password = input("Enter the password: ").encode()
+    password = getpass().encode()
 
     # Prompt for the file name or path
     file_path = input("Enter the file path, or just file name if in current directory: ")
